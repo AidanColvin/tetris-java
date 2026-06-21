@@ -42,7 +42,17 @@ Then open http://localhost:8080.
 
 ## Deploy (public URL)
 
-The app is a single Spring Boot process with a long-lived WebSocket, so it needs
-a JVM/Docker host (Vercel's serverless model can't run it). A `Dockerfile` is
-included; it works as-is on Render, Railway, or Fly.io. Hosts inject `PORT`,
-which `application.properties` already honors.
+This repo ships **two deploy targets**:
+
+1. **Render — the real Java backend (`Dockerfile` + `render.yaml`).**
+   The full server-authoritative game: Spring Boot process with a long-lived
+   WebSocket serving the Java engine. Needs a JVM/Docker host (Vercel's
+   serverless model can't run it). Works as-is on Render, Railway, or Fly.io;
+   hosts inject `PORT`, which `application.properties` honors.
+
+2. **Vercel — a client-side build (`public/` + `api/` + `vercel.json`).**
+   The same Tetris rules ported to browser JavaScript (`public/game.js`) so the
+   game runs entirely client-side and can be hosted statically. The leaderboard
+   is a Vercel serverless function (`api/leaderboard.js`, in-memory; mirrored to
+   `localStorage` per browser). This is the standalone version — the connected
+   Java backend lives on the Render target above.

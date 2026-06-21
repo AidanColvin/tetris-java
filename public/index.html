@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris &mdash; Java Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>TETRIS</h1>
+            <p class="subtitle">Java-ported engine &bull; runs in your browser</p>
+        </header>
+
+        <div class="game">
+            <aside class="panel left">
+                <div class="box">
+                    <h2>Hold</h2>
+                    <canvas id="hold" width="120" height="120"></canvas>
+                </div>
+                <div class="box stats">
+                    <div class="stat"><span>Score</span><b id="score">0</b></div>
+                    <div class="stat"><span>Lines</span><b id="lines">0</b></div>
+                    <div class="stat"><span>Level</span><b id="level">1</b></div>
+                </div>
+            </aside>
+
+            <main class="board-wrap">
+                <canvas id="board" width="300" height="600"></canvas>
+                <div id="overlay" class="overlay">
+                    <div class="overlay-card">
+                        <h2 id="overlay-title">Ready?</h2>
+                        <p id="overlay-text">Clear lines, climb the levels, beat the board.</p>
+                        <button id="start-btn">Start Game</button>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="panel right">
+                <div class="box">
+                    <h2>Next</h2>
+                    <canvas id="next" width="120" height="360"></canvas>
+                </div>
+            </aside>
+        </div>
+
+        <section class="bottom">
+            <div class="box controls">
+                <h2>Controls</h2>
+                <ul>
+                    <li><kbd>&larr;</kbd><kbd>&rarr;</kbd> Move</li>
+                    <li><kbd>&darr;</kbd> Soft drop</li>
+                    <li><kbd>&uarr;</kbd> / <kbd>X</kbd> Rotate</li>
+                    <li><kbd>Z</kbd> Rotate CCW</li>
+                    <li><kbd>Space</kbd> Hard drop</li>
+                    <li><kbd>C</kbd> Hold</li>
+                </ul>
+            </div>
+            <div class="box leaderboard">
+                <h2>Leaderboard</h2>
+                <ol id="leaderboard"><li class="empty">No scores yet</li></ol>
+            </div>
+        </section>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
