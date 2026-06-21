@@ -2,62 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetris &mdash; Java Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Tetris</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app">
-        <header>
-            <h1>TETRIS</h1>
-            <p class="subtitle">Java-ported engine &bull; runs in your browser</p>
+        <header class="brand">
+            <h1>Tetris</h1>
         </header>
 
-        <div class="game">
-            <aside class="panel left">
-                <div class="box">
-                    <h2>Hold</h2>
-                    <canvas id="hold" width="120" height="120"></canvas>
+        <div class="hud">
+            <div class="chip">
+                <span class="chip-label">Hold</span>
+                <canvas id="hold" width="128" height="104"></canvas>
+            </div>
+            <div class="scoreboard">
+                <div class="score" id="score">0</div>
+                <div class="submeta">
+                    <span>Level <b id="level">1</b></span>
+                    <span class="dot">·</span>
+                    <span><b id="lines">0</b> lines</span>
                 </div>
-                <div class="box stats">
-                    <div class="stat"><span>Score</span><b id="score">0</b></div>
-                    <div class="stat"><span>Lines</span><b id="lines">0</b></div>
-                    <div class="stat"><span>Level</span><b id="level">1</b></div>
-                </div>
-            </aside>
-
-            <main class="board-wrap">
-                <canvas id="board" width="300" height="600"></canvas>
-                <div id="overlay" class="overlay">
-                    <div class="overlay-card">
-                        <h2 id="overlay-title">Ready?</h2>
-                        <p id="overlay-text">Clear lines, climb the levels, beat the board.</p>
-                        <button id="start-btn">Start Game</button>
-                    </div>
-                </div>
-            </main>
-
-            <aside class="panel right">
-                <div class="box">
-                    <h2>Next</h2>
-                    <canvas id="next" width="120" height="360"></canvas>
-                </div>
-            </aside>
+            </div>
+            <div class="chip">
+                <span class="chip-label">Next</span>
+                <canvas id="next" width="336" height="104"></canvas>
+            </div>
         </div>
 
-        <section class="bottom">
-            <div class="box controls">
-                <h2>Controls</h2>
-                <ul>
-                    <li><kbd>&larr;</kbd><kbd>&rarr;</kbd> Move</li>
-                    <li><kbd>&darr;</kbd> Soft drop</li>
-                    <li><kbd>&uarr;</kbd> / <kbd>X</kbd> Rotate</li>
-                    <li><kbd>Z</kbd> Rotate CCW</li>
-                    <li><kbd>Space</kbd> Hard drop</li>
-                    <li><kbd>C</kbd> Hold</li>
-                </ul>
+        <main class="playfield">
+            <canvas id="board" width="300" height="600"></canvas>
+            <div id="overlay" class="overlay">
+                <div class="overlay-card">
+                    <h2 id="overlay-title">Ready to play?</h2>
+                    <p id="overlay-text">Clear lines, climb the levels, beat the board.</p>
+                    <button id="start-btn" class="btn-primary">Start Game</button>
+                </div>
             </div>
-            <div class="box leaderboard">
+        </main>
+
+        <section class="touch" id="touch" aria-label="Touch controls">
+            <div class="pad pad-move">
+                <button class="ctrl" id="btn-left" aria-label="Move left">
+                    <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+                </button>
+                <button class="ctrl" id="btn-down" aria-label="Soft drop">
+                    <svg viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></svg>
+                </button>
+                <button class="ctrl" id="btn-right" aria-label="Move right">
+                    <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="pad pad-act">
+                <button class="ctrl" id="btn-hold" aria-label="Hold">
+                    <svg viewBox="0 0 24 24"><rect x="4.5" y="6.5" width="15" height="11" rx="2.5"/><path d="M9 17.5v-11M15 17.5v-11"/></svg>
+                </button>
+                <button class="ctrl" id="btn-rotate" aria-label="Rotate">
+                    <svg viewBox="0 0 24 24"><path d="M5.5 9.5a7 7 0 1 1-1 5.5"/><path d="M3 4.5l1 5 5-1"/></svg>
+                </button>
+                <button class="ctrl ctrl-primary" id="btn-drop" aria-label="Hard drop">
+                    <svg viewBox="0 0 24 24"><path d="M12 3v11M7.5 10l4.5 4.5L16.5 10M6 20h12"/></svg>
+                </button>
+            </div>
+        </section>
+
+        <section class="footer">
+            <p class="kbd-hints">
+                <kbd>&larr;</kbd><kbd>&rarr;</kbd> Move&nbsp;&nbsp;<kbd>&darr;</kbd> Soft drop&nbsp;&nbsp;<kbd>&uarr;</kbd>/<kbd>X</kbd> Rotate&nbsp;&nbsp;<kbd>Z</kbd> CCW&nbsp;&nbsp;<kbd>Space</kbd> Drop&nbsp;&nbsp;<kbd>C</kbd> Hold
+            </p>
+            <div class="card leaderboard">
                 <h2>Leaderboard</h2>
                 <ol id="leaderboard"><li class="empty">No scores yet</li></ol>
             </div>
