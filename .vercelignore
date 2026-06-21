@@ -1,0 +1,11 @@
+/src
+/target
+/data
+pom.xml
+Dockerfile
+.dockerignore
+render.yaml
+/.mvn
+mvnw
+mvnw.cmd
+*.iml
