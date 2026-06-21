@@ -1,0 +1,13 @@
+# Render Blueprint — one-click permanent deploy of the Spring Boot + WebSocket app.
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: tetris-java
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    autoDeploy: true
+    # Render injects PORT; application.properties reads ${PORT:8080}.
+    envVars:
+      - key: JAVA_TOOL_OPTIONS
+        value: "-XX:MaxRAMPercentage=75"
