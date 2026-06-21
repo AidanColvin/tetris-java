@@ -10,15 +10,16 @@ const WIDTH = 10;
 const HEIGHT = 20;
 const CELL = 30; // logical board cell size (board is 300x600 logical)
 
-// Apple system colors (dark-mode variants) for the seven tetrominoes.
+// Muted, matte palette for the seven tetrominoes — desaturated and flat
+// (no gloss) for a calm, refined look rather than a glossy "candy" one.
 const COLORS = {
-    1: "#64d2ff", // I - cyan
-    2: "#ffd60a", // O - yellow
-    3: "#bf5af2", // T - purple
-    4: "#30d158", // S - green
-    5: "#ff453a", // Z - red
-    6: "#0a84ff", // J - blue
-    7: "#ff9f0a"  // L - orange
+    1: "#6c9bab", // I - dusty teal
+    2: "#c9a96a", // O - sand
+    3: "#9685b3", // T - muted purple
+    4: "#7fa37a", // S - sage
+    5: "#bd7a6e", // Z - clay
+    6: "#6f88ad", // J - slate blue
+    7: "#c08f63"  // L - caramel
 };
 
 const SHAPES = {
@@ -264,14 +265,6 @@ const MINI_SHAPES = {
     7: [[0,2],[1,0],[1,1],[1,2]]
 };
 
-function shade(hex, amt) {
-    const c = hex.replace("#", "");
-    let r = parseInt(c.substr(0, 2), 16), g = parseInt(c.substr(2, 2), 16), b = parseInt(c.substr(4, 2), 16);
-    const t = amt < 0 ? 0 : 255, p = Math.abs(amt);
-    r = Math.round((t - r) * p) + r; g = Math.round((t - g) * p) + g; b = Math.round((t - b) * p) + b;
-    return `rgb(${r},${g},${b})`;
-}
-
 function roundRect(ctx, x, y, w, h, r) {
     ctx.beginPath();
     ctx.moveTo(x + r, y);
@@ -284,25 +277,19 @@ function roundRect(ctx, x, y, w, h, r) {
 
 function drawCell(ctx, x, y, size, colorIndex, ghost) {
     const base = COLORS[colorIndex] || "#8e8e93";
-    const pad = Math.max(1, size * 0.06);
+    const pad = Math.max(1, size * 0.07);
     const x0 = x + pad, y0 = y + pad, s = size - 2 * pad;
-    const r = Math.max(2, s * 0.2);
+    const r = Math.max(2, s * 0.18);
     if (ghost) {
         ctx.save();
-        ctx.globalAlpha = 0.22;
+        ctx.globalAlpha = 0.18;
         ctx.fillStyle = base;
         roundRect(ctx, x0, y0, s, s, r); ctx.fill();
         ctx.restore();
         return;
     }
-    const grad = ctx.createLinearGradient(x0, y0, x0, y0 + s);
-    grad.addColorStop(0, shade(base, 0.24));
-    grad.addColorStop(0.5, base);
-    grad.addColorStop(1, shade(base, -0.16));
-    ctx.fillStyle = grad;
+    ctx.fillStyle = base; // flat, matte fill — no gloss or gradient
     roundRect(ctx, x0, y0, s, s, r); ctx.fill();
-    ctx.fillStyle = "rgba(255,255,255,0.30)";
-    roundRect(ctx, x0 + s * 0.14, y0 + s * 0.12, s * 0.72, s * 0.2, r * 0.5); ctx.fill();
 }
 
 function drawPieceCentered(ctx, colorIndex, sx, sy, sw, sh, cell) {
